@@ -1,5 +1,5 @@
 <template>
-  <div class="_wrapper" v-show="isShowBroad">
+  <div class="_wrapper">
     <section class="sz-row-flex sz-row-flex-around _boradcard sz-col-6 sz-row-flex-center">
       <!-- 三列布局 -->
       <!--左-->
@@ -10,9 +10,11 @@
       <div
         id="_slideText"
         class="_broadcast__text sz-row-flex sz-row-flex-start sz-row-flex-middle sz-col-4"
+        :style="{animationDuration:`${animationSpeed}s`}"
         @animationiteration="changeAnimationIndex"
+        @animationend="animationend"
       >
-        <p>{{showText}}</p>
+        <div class="slide-text" :style="textStyle">{{showText}}</div>
       </div>
       <!-- 右 -->
       <div class="sz-col-1 sz-col-flex sz-col-flex-middle sz-col-flex-center _broadcast__close">
@@ -26,43 +28,44 @@ export default {
   name: 'slide',
   data () {
     return {
-      aIndex: 0,
-      showText: '',
-      isShowBroad: true
+      index: 0, // 多个的时候的index
+      showText: '' // 用于滚动的text
     }
   },
   props: {
-    animationText: {
+    animationSpeed: {
+      type:Number,
+      default:2
+    },
+    textStyle:{
+      type:String,
+      default:'',
+    }, // 文字的样式
+    slideText: {
       type: String,
       default: 'xxx'
-    },
-    slideTextList: {
+    }, // 循环的单条数据
+    slideTextList: { 
       type: Array,
       default () {
         return []
       }
-    },
-    // 是否支持缩写，默认支持
-    spAbbreviation: {
+    }, // 循环的多条数据
+    abbreviation: {
       type: Boolean,
       default: true
-    },
-    // 支持上下左右
+    }, // 是否支持缩写，默认支持
     direction: {
       type: String,
       default: 'left'
-    }
+    } // 支持上下左右
   },
-  created () {
-  },
+  created () {},
   mounted () {
     this.initBase()
-    this.showText = this.animationText
+    this.showText = this.slideText
   },
   methods: {
-    // hideBorad () {
-    //   this.isShowBroad = false
-    // },
     initBase () {
       let slideText = document.getElementById('_slideText')
       switch (this.direction) {
@@ -80,16 +83,19 @@ export default {
           break
       }
     },
+    // 单条数据滚动动画完成之后的钩子
+    animationend () {
+      this.$emit('on-animationend')
+    },
+    // 负责多条数据数据的滚动
     changeAnimationIndex () {
       if (this.slideTextList.length >= 1) {
-        if (this.aIndex < this.slideTextList.length - 1) {
-          this.nowAnimationItem = this.slideTextList[this.aIndex + 1]
-          this.showText = this.slideTextList[this.aIndex + 1]
-          this.aIndex++
+        if (this.index < this.slideTextList.length - 1) {
+          this.showText = this.slideTextList[this.index + 1]
+          this.index++
         } else {
-          this.aIndex = 0
-          this.nowAnimationItem = this.slideTextList[0]
-          this.showText = this.slideTextList[this.aIndex + 1]
+          this.index = 0
+          this.showText = this.slideTextList[0]
         }
       }
     }
@@ -99,6 +105,9 @@ export default {
 
 // if you don't like it ,you can write by the css
 <style lang="scss" scoped>
+.slide-text {
+  width: 100%;
+}
 ._wrapper {
   background: #d3d3d3;
 }

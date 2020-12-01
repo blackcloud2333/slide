@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "pm2 start build/build.js -i max --watch --name='slide",
     "lint": "standard --fix",
     "start": "pm2 start build/dev-server.js --name='slide'",
@@ -20,13 +20,9 @@
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.12.0",
     "pre-commit": "^1.2.2",
     "sass-loader": "^7.1.0",
-    "standard": "^14.3.1",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.35.0"
   }
