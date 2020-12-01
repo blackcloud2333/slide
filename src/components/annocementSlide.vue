@@ -1,6 +1,6 @@
 <template>
   <div class="_wrapper">
-    <section class="sz-row-flex sz-row-flex-around _boradcard sz-col-6 sz-row-flex-center">
+    <section :style=slideBgcStyle class="sz-row-flex sz-row-flex-around _boradcard sz-col-6 sz-row-flex-center">
       <!-- 三列布局 -->
       <!--左-->
       <div class="sz-col-flex sz-col-flex-middle">
@@ -33,6 +33,11 @@ export default {
     }
   },
   props: {
+    // 背景样式
+    slideBgcStyle: {
+      type:String,
+      default:'',
+    },
     animationSpeed: {
       type:Number,
       default:2

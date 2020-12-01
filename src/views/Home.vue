@@ -4,6 +4,7 @@
       :direction=direction
       :slideTextList="slideTextList"
       :textStyle="textStyle"
+      :slideBgcStyle="slideBgcStyle"
       @on-animationend="animationend"
       :animationSpeed=animationSpeed
     >
@@ -22,6 +23,7 @@ export default {
   },
   data () {
     return {
+      slideBgcStyle:'background:red',
       // 滚动的周期以秒为单位
       animationSpeed:2,
       //循环滚动的内容的样式
