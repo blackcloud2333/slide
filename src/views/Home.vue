@@ -2,7 +2,7 @@
   <div class="home">
     <sp-slide
       :direction=direction
-      :animationText=animationText
+      :slideTextList= slideTextList
     >
     </sp-slide>
   </div>
@@ -19,7 +19,8 @@ export default {
   },
   data () {
     return {
-      direction: 'right',
+      slideTextList: ['hello, this is a banne', 'zzz', 'dasdsada', 'dasdsad'],
+      direction: 'up',
       spAbbreviation: true,
       animationText: 'hello, this is a banner'
     }

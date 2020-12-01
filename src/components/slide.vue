@@ -1,32 +1,22 @@
 <template>
-  <div
-    class="_wrapper"
-    v-show="isShowBroad"
-  >
+  <div class="_wrapper" v-show="isShowBroad">
     <section class="sz-row-flex sz-row-flex-around _boradcard sz-col-6 sz-row-flex-center">
       <!-- 三列布局 -->
       <!--左-->
-      <div class="sz-col-flex  sz-col-flex-middle">
-        <i
-          class="iconfont icon-laba ft36 sz-pdl54 _boradcard__laba"
-          style="flex: none;"
-        >
-        </i>
+      <div class="sz-col-flex sz-col-flex-middle">
+        <i class="iconfont icon-laba ft36 sz-pdl54 _boradcard__laba" style="flex: none;"></i>
       </div>
       <!--中-->
       <div
         id="_slideText"
-        class="rightSlide _broadcast__text sz-row-flex sz-row-flex-start sz-row-flex-middle sz-col-4"
+        class="_broadcast__text sz-row-flex sz-row-flex-start sz-row-flex-middle sz-col-4"
         @animationiteration="changeAnimationIndex"
       >
-        <p>
-          {{animationText}}
-        </p>
+        <p>{{showText}}</p>
       </div>
       <!-- 右 -->
-      <div class=" sz-col-1 sz-col-flex sz-col-flex-middle sz-col-flex-center _broadcast__close">
-        <i class="iconfont icon-close">
-        </i>
+      <div class="sz-col-1 sz-col-flex sz-col-flex-middle sz-col-flex-center _broadcast__close">
+        <i class="iconfont icon-close"></i>
       </div>
     </section>
   </div>
@@ -34,9 +24,10 @@
 <script>
 export default {
   name: 'slide',
-          data () {
+  data () {
     return {
-      aIndex: '',
+      aIndex: 0,
+      showText: '',
       isShowBroad: true
     }
   },
@@ -46,9 +37,9 @@ export default {
       default: 'xxx'
     },
     slideTextList: {
-      type: Object,
+      type: Array,
       default () {
-        return {}
+        return []
       }
     },
     // 是否支持缩写，默认支持
@@ -66,6 +57,7 @@ export default {
   },
   mounted () {
     this.initBase()
+    this.showText = this.animationText
   },
   methods: {
     // hideBorad () {
@@ -92,10 +84,12 @@ export default {
       if (this.slideTextList.length >= 1) {
         if (this.aIndex < this.slideTextList.length - 1) {
           this.nowAnimationItem = this.slideTextList[this.aIndex + 1]
+          this.showText = this.slideTextList[this.aIndex + 1]
           this.aIndex++
         } else {
           this.aIndex = 0
           this.nowAnimationItem = this.slideTextList[0]
+          this.showText = this.slideTextList[this.aIndex + 1]
         }
       }
     }
